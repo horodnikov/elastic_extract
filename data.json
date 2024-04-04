@@ -1,0 +1,39 @@
+{
+    "query": {
+      "bool": {
+        "minimum_should_match": 1,
+        "should": [
+          {
+            "match_phrase": {
+              "_index": "network-wg-"
+            }
+          },
+          {
+            "match_phrase": {
+              "tags": "ikev2_vpn_login"
+            }
+          },
+          {
+            "match_phrase": {
+              "tags": "ssl_vpn_login"
+            }
+          }
+        ],
+       "filter": {
+         "range": {
+            "@timestamp": {
+              "gte": "now-10h",
+              "lte": "now"
+            }
+          }
+      }
+    }},
+    "fields": [
+      "username",
+      "geoip.continent_name",
+      "geoip.city_name", 
+      "external_ip",
+      "@timestamp"
+    ],
+    "_source": false
+  }
